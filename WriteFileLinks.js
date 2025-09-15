@@ -10,7 +10,7 @@ class WriteFileLinks {
      * @param {string} urls 
      */
     constructor(urls) {
-        this.links = urls;
+        links = urls;
     }
 
     /**
@@ -25,7 +25,7 @@ class WriteFileLinks {
      * @returns {Array} Array of links to binary files.
      */
     filter() {
-        const resultLinks = this.links.filter((link) => {
+        const resultLinks = links.filter((link) => {
 
             if (link !== null) {
             

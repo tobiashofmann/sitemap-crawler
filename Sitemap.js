@@ -10,7 +10,7 @@ const agent = new https.Agent({
 });
 
 let sitemapUrl = "";
-const timeout = 60000;
+//const timeout = 60000;
 
 class Sitemap {
 
@@ -18,8 +18,8 @@ class Sitemap {
    * Set sitemap URL.
    * @param {string} sitemapUrl 
    */
-  constructor(sitemapUrl) {
-    this.sitemapUrl = sitemapUrl;
+  constructor(url) {
+    sitemapUrl = url;
   }
 
   /**
@@ -99,10 +99,10 @@ class Sitemap {
    */
   async getUrls() {
 
-    console.log(`Crawling sitemap: ${this.sitemapUrl}`);
+    console.log(`Crawling sitemap: ${sitemapUrl}`);
     try {
       // Fetch sitemap recursively
-      let links = await this.crawl_sitemap(this.sitemapUrl);
+      let links = await this.crawl_sitemap(sitemapUrl);
 
       links = this.flattenLinks(links);
     

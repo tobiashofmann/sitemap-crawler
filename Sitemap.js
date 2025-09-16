@@ -13,6 +13,11 @@ let sitemapUrl = "";
 //const timeout = 60000;
 let sitemapSet = new Set();
 
+const headers = {
+  'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.82 Safari/537.36',
+  'Accept-Language': 'de,en'
+};
+
 class Sitemap {
 
   /**
@@ -32,7 +37,7 @@ class Sitemap {
 
     //console.log("url");
 
-    return fetch(url, { timeout, agent })
+    return fetch(url, { timeout, agent, headers })
       .then(res => res.text())
       .then(xml => {
         

@@ -11,6 +11,7 @@ const agent = new https.Agent({
 
 let sitemapUrl = "";
 //const timeout = 60000;
+let sitemapSet = new Set();
 
 class Sitemap {
 
@@ -29,6 +30,8 @@ class Sitemap {
   async crawl_sitemap(url) {
     let  timeout = 6000;
 
+    //console.log("url");
+
     return fetch(url, { timeout, agent })
       .then(res => res.text())
       .then(xml => {
@@ -46,6 +49,7 @@ class Sitemap {
         if (sitemapindex) {
           // Contains only a single sitemap
           if (sitemapindex.sitemap.loc) {
+            sitemapSet.add(sitemapindex.sitemap.loc);
             return Promise.all([
               this.crawl_sitemap(sitemapindex.sitemap.loc),
             ]);
@@ -53,6 +57,9 @@ class Sitemap {
             // Recursively fetch all sitemaps inside current sitemap and fetch links
             return Promise.all(
               sitemapindex.sitemap.map(sitemap => {
+
+                  sitemapSet.add(sitemap.loc);
+
                   return this.crawl_sitemap(sitemap.loc);
                 }
               )
@@ -95,7 +102,7 @@ class Sitemap {
 
   /**
    * Retrieve URLs from sitemap
-   * @returns {Set} Links found in sitemap
+   * @returns {Set, Set} Links found in sitemap and all found sitemaps
    */
   async getUrls() {
 
@@ -108,7 +115,9 @@ class Sitemap {
     
       links = this.getUniqueLinks(links);
 
-      return links;
+      let sitemaps = this.getUniqueLinks(sitemapSet);
+
+      return {links, sitemaps};
 
     } catch (err) {
       throw new Error('Unable to fetch sitemap.', err);

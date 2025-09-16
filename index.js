@@ -22,22 +22,30 @@ if (url === "" || url === undefined) {
 console.log("Starting to crawl");
 
 const sitemap = new Sitemmap(url);
-let urls = await sitemap.getUrls();
+let result = await sitemap.getUrls();
 
-console.log(`Found ${urls.length} links in sitemap`);
+console.log(`Found ${result.links.length} links in sitemap`);
+console.log(`Found ${result.sitemaps.length} sitemaps`);
 
 try {
     //
     // write all urls to file data.json
     //
     const filePath = path.join('./data.json');
-    const jsonString = JSON.stringify(urls);
+    const jsonString = JSON.stringify(result.links);
     fs.writeFileSync(filePath, jsonString, 'utf8');
+
+    //
+    // write all sitemaps to file sitemaps.json
+    //
+    const sitemapsFilePath = path.join('./sitemaps.json');
+    const sitemapsJsonString = JSON.stringify(result.sitemaps);
+    fs.writeFileSync(sitemapsFilePath, sitemapsJsonString, 'utf8');
 
     //
     // write all binary links to file links.txt
     //
-    let writeFileLinks = new WriteFileLinks(urls);
+    let writeFileLinks = new WriteFileLinks(result.links);
     writeFileLinks.writeLinks();
 
     //

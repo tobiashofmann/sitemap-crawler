@@ -1,6 +1,6 @@
 {
   "name": "sitemap-crawler",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Crawl links from a sitemap.xml file and extract the link to binary files.",
   "type": "module",
   "homepage": "https://github.com/tobiashofmann/sitemap-crawler",
@@ -11,6 +11,18 @@
     "type": "git",
     "url": "https://github.com/tobiashofmann/sitemap-crawler"
   },
+  "bin": {
+    "sitemap-links": "./index.js"
+  },
+  "files": [
+    "README.md",
+    "Sitemap.js",
+    "index.js",
+    "getFiles.js",
+    "WriteFileLinks.js",
+    "WriteLinks.js",
+    "LICENSE"
+  ],
   "keywords": [
     "sitemap",
     "crawler"
@@ -20,6 +32,10 @@
     "start": "node index.js",
     "lint": "eslint *.js"
   },
+  "engines": {
+		"node": "^20.11.0 || >=22.0.0",
+		"npm": ">= 8"
+	},
   "author": "Tobias Hofmann",
   "license": "Apache-2.0",
   "dependencies": {

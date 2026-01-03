@@ -1,7 +1,10 @@
+#!/usr/bin/env node
+
 import fs from "fs";
 import path from "path";
 import Sitemmap from "./Sitemap.js";
 import WriteFileLinks from "./WriteFileLinks.js";
+import WriteLinks from "./WriteLinks.js";
 import process from 'node:process';
 
 //
@@ -48,12 +51,19 @@ try {
     let writeFileLinks = new WriteFileLinks(result.links);
     writeFileLinks.writeLinks();
 
+    // 
+    // write links to sitemaplinks.txt
+    //
+    let writeLinks = new WriteLinks(result.links);
+    writeLinks.writeLinks();
+
     //
     // done
     //
     console.log("crawling done.");
     console.log("File: data.json contains all links retrieved from sitemap.");
     console.log("File: links.txt contains all links to binary files (PDF, DOCX, PPTX, etc.) retrieved from sitemap.");
+    console.log("File: pages.txt contains all links to pages retrieved from sitemap.");
 
 } catch (error) {
     console.error("Error saving JSON data to file:", error.message);
